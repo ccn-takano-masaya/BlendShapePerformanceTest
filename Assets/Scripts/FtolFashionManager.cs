@@ -11,7 +11,7 @@ namespace Ftol.Fashion
 {
     public class EditModel
     {
-        // TODO: proto‚Ö“‡
+        // TODO: protoã¸çµ±åˆ
         public enum ItemType
         {
             None,
@@ -160,7 +160,7 @@ public class FtolFashionManager/* : MonoBehaviour*/
     // Start is called before the first frame update
     async void Start()
     {
-        await AvatarData.LoadAvatarDatas();     //ƒAƒoƒ^[ƒf[ƒ^‚ğ“Ç‚İ‚ñ‚Å‚¨‚­
+        await AvatarData.LoadAvatarDatas();     //ã‚¢ãƒã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚“ã§ãŠã
 
         //var avatorData = new AvatarData();
         //avatorData.Initialize("Avator000");
@@ -179,17 +179,17 @@ public class FtolFashionManager/* : MonoBehaviour*/
         }
         _avatorDataList.Add(avator);
 
-        //À•W‚ğİ’è
+        //åº§æ¨™ã‚’è¨­å®š
         float x_one_dist = 0.8f;
         float y_one_dist = 1.2f;
-        int x_no = 3;       //‰¡‚É•À‚×‚é”
+        int x_no = 3;       //æ¨ªã«ä¸¦ã¹ã‚‹æ•°
         float x_width = x_one_dist * (x_no - 1);
 
         int x = count % x_no;
         int y = count / x_no;
 
         var rootObj = avator.GetRootObj();
-        rootObj.transform.position = new Vector3(-(x_width/2) + (x * x_one_dist), y * y_one_dist, 0);
+        rootObj.transform.position = new Vector3(-(x_width/2) + (x * x_one_dist), y * y_one_dist - y_one_dist, 0);
     }
 
     public void DeleteAvator()

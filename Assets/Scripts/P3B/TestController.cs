@@ -14,6 +14,7 @@ namespace Cocone.P3B.Test
         ArtToy,
         LightCrossfade,
         MetallicShader,
+        AvatarTest,
     }
 
     public enum ExitCode
@@ -53,7 +54,7 @@ namespace Cocone.P3B.Test
 
         private async void Start()
         {
-#if true
+#if false
             //�A�o�^�[�f�[�^�̃��[�h�A�N���G�C�g
             await AvatarData.LoadAvatarDatas();
             var ftolFashionManager = FtolFashionManager.GetInstance();
@@ -94,6 +95,9 @@ namespace Cocone.P3B.Test
                     break;
                 case TestType.MetallicShader:
                     test = gameObject.AddComponent<MetallicShaderTest>();
+                    break;
+                case TestType.AvatarTest:
+                    test = gameObject.AddComponent<AvatarTest>();
                     break;
                 default:
                     Exit(ExitCode.TestTypeNotSupported);
