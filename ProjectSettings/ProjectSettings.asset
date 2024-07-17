@@ -163,7 +163,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: jp.cocone.blendshapetest
     Standalone: com.Unity-Technologies.com.unity.template.urp-blank
-    iPhone: com.Unity-Technologies.com.unity.template.urp-blank
+    iPhone: jp.cocone.blendshapetest
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -808,6 +808,7 @@ PlayerSettings:
   webGLPowerPreference: 2
   scriptingDefineSymbols:
     Android: DOTWEEN;DEVELOP;PROFILE_COMMENT
+    iPhone: PROFILE_COMMENT;DOTWEEN;DEVELOP
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
