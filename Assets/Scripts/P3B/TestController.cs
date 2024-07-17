@@ -60,8 +60,8 @@ namespace Cocone.P3B.Test
             for (int i = 0; i < 6; i++)
                 ftolFashionManager.AddAvator();
 #endif
-            CreateAvator(6);
-            Debug.Log("create avator 6");
+            //CreateAvator(6);
+            //Debug.Log("create avator 6");
             
             //await UniTask.Delay(2000);
             
