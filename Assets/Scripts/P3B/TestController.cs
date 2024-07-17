@@ -101,7 +101,7 @@ namespace Cocone.P3B.Test
             }
 
             var exitCode = await test.StartTest(inputJson, outputPath);
-                Exit(exitCode);
+            Exit(exitCode);
         }
 
         private void CreateAvator(int number)
