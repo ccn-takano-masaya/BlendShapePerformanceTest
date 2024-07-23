@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Ftol.Avatar;
+using Unity.VisualScripting;
 
 namespace Cocone.P3B.Test
 {
@@ -12,6 +14,7 @@ namespace Cocone.P3B.Test
         ArtToy,
         LightCrossfade,
         MetallicShader,
+        AvatarTest,
     }
 
     public enum ExitCode
@@ -28,6 +31,8 @@ namespace Cocone.P3B.Test
 
     public sealed class TestController : MonoBehaviour
     {
+        [SerializeField] private GameObject _blendShapePrefab;
+        
         private const string INPUT_KEY = "input";
         private const string OUTPUT_KEY = "output";
 
@@ -49,26 +54,33 @@ namespace Cocone.P3B.Test
 
         private async void Start()
         {
+#if false
+            //ï¿½Aï¿½oï¿½^ï¿½[ï¿½fï¿½[ï¿½^ï¿½Ìƒï¿½ï¿½[ï¿½hï¿½Aï¿½Nï¿½ï¿½ï¿½Gï¿½Cï¿½g
+            await AvatarData.LoadAvatarDatas();
+            var ftolFashionManager = FtolFashionManager.GetInstance();
+            for (int i = 0; i < 6; i++)
+                ftolFashionManager.AddAvator();
+#endif
+            //CreateAvator(6);
+            //Debug.Log("create avator 6");
+            
+            //await UniTask.Delay(2000);
+            
             string inputJson = "", outputPath = "";
             if (!ParseArguments(out inputJson, out outputPath))
             {
                 Exit(ExitCode.ParseArgumentsFailed);
                 return;
             }
-
+            Debug.Log("end ParseArguments");
+            
             var inputType = JsonUtility.FromJson<InputType>(inputJson);
             if (!Enum.TryParse<TestType>(inputType.type, out var selectedType))
             {
                 Exit(ExitCode.ParseTestTypeFailed);
                 return;
             }
-
-            //ƒAƒoƒ^[ƒf[ƒ^‚Ìƒ[ƒhAƒNƒŠƒGƒCƒg
-            await AvatarData.LoadAvatarDatas();
-            var ftolFashionManager = FtolFashionManager.GetInstance();
-            for (int i = 0; i < 3; i++)
-                ftolFashionManager.AddAvator();
-
+            
             ITestBase test;
             switch(selectedType)
             {
@@ -84,22 +96,47 @@ namespace Cocone.P3B.Test
                 case TestType.MetallicShader:
                     test = gameObject.AddComponent<MetallicShaderTest>();
                     break;
+                case TestType.AvatarTest:
+                    test = gameObject.AddComponent<AvatarTest>();
+                    break;
                 default:
                     Exit(ExitCode.TestTypeNotSupported);
                     return;
             }
-            //test = gameObject.AddComponent<CollectionRoomTest>();
 
             var exitCode = await test.StartTest(inputJson, outputPath);
             Exit(exitCode);
+        }
+
+        private void CreateAvator(int number)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                float x_one_dist = 0.8f;
+                float y_one_dist = 1.2f;
+                int x_no = 3;      
+                float x_width = x_one_dist * (x_no - 1);
+
+                int x = i % x_no;
+                int y = i / x_no;
+
+                var rootObj = GameObject.Instantiate(_blendShapePrefab);// avator.GetRootObj();
+                rootObj.transform.position = new Vector3(-(x_width/2) + (x * x_one_dist), y * y_one_dist, 0);
+            }
         }
 
         private bool ParseArguments(out string inputJson, out string outputPath)
         {
 #if UNITY_EDITOR
 #if (PROFILE_COMMENT)
+#if UNITY_EDITOR_WIN            
             var inputPath = "D:/work/project/unity/BlendShapePerformanceTest/Assets/Config/input.json";
             outputPath = "D:/work/output";
+#else
+            
+            var inputPath = "/Users/takano_masaya/BlendShapePerformanceTest/Assets/Config/input.json";
+            outputPath = "/Users/takano_masaya/BlendShapePerformanceTest/output";
+#endif
 #else
             var inputPath = "/Users/kuo_ming-nsun/Projects/p3b-performance-test/input.json";
             outputPath = "/Users/kuo_ming-nsun/Projects/p3b-performance-test/output";
